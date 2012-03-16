@@ -40,13 +40,13 @@
 pref("toolkit.defaultChromeURI", "chrome://browser/content/shell.xul");
 pref("browser.chromeURL", "chrome://browser/content/");
 #ifdef MOZ_OFFICIAL_BRANDING
-pref("browser.homescreenURL", "file:///system/home/homescreen.html");
+pref("browser.homescreenURL", "http://homescreen.gaiamobile.org/homescreen.html,file:///system/home/homescreen.html");
 #else
-pref("browser.homescreenURL", "file:///data/local/homescreen.html,file:///system/home/homescreen.html");
+pref("browser.homescreenURL", "http://homescreen.gaiamobile.org/homescreen.html");
 #endif
 
 // URL for the dialer application.
-pref("dom.telephony.app.phone.url", "http://localhost:7777/data/local/apps/dialer/dialer.html,http://localhost:7777/data/local/apps/homescreen/homescreen.html,http://localhost:7777/apps/dialer/dialer.html,http://localhost:7777/apps/homescreen/homescreen.html");
+pref("dom.telephony.app.phone.url", "http://localhost:7777/data/local/apps/dialer/dialer.html, http://localhost:7777/system/home/apps/dialer/dialer.html, http://localhost:7777/system/home/apps/homescreen/homescreen.html, http://localhost:7777/data/local/apps/homescreen/homescreen.html, http://homescreen.gaiamobile.org/homescreen.html, http://dialer.gaiamobile.org/dialer.html");
 
 // Device pixel to CSS px ratio, in percent. Set to -1 to calculate based on display density.
 pref("browser.viewport.scaleRatio", -1);
@@ -147,7 +147,7 @@ pref("dom.disable_open_during_load", true);
 pref("privacy.popups.showBrowserMessage", true);
 
 pref("keyword.enabled", true);
-pref("keyword.URL", "https://www.google.com/m?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=");
+pref("keyword.URL", "http://www.google.com/m?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=");
 
 pref("accessibility.typeaheadfind", false);
 pref("accessibility.typeaheadfind.timeout", 5000);
@@ -294,6 +294,7 @@ pref("dom.indexedDB.warningQuota", 5);
 // prevent video elements from preloading too much data
 pref("media.preload.default", 1); // default to preload none
 pref("media.preload.auto", 2);    // preload metadata if preload=auto
+pref("media.cache_size", 128);    // 4MB media cache
 
 //  0: don't show fullscreen keyboard
 //  1: always show fullscreen keyboard
@@ -391,7 +392,11 @@ pref("layers.acceleration.force-enabled", true);
 // screen.enabled and screen.brightness properties.
 pref("dom.screenEnabledProperty.enabled", true);
 pref("dom.screenBrightnessProperty.enabled", true);
-pref("dom.mozScreenWhitelist", "http://localhost:7777");
+pref("dom.mozScreenWhitelist", "http://localhost:7777,http://settings.gaiamobile.org,http://homescreen.gaiamobile.org");
+
+//Enable/disable marionette server, set listening port
+pref("marionette.defaultPrefs.enabled", true);
+pref("marionette.defaultPrefs.port", 2828);
 
 // handle links targeting new windows
 // 1=current window/tab, 2=new window, 3=new tab in most recent window
@@ -404,15 +409,15 @@ pref("browser.link.open_newwindow.restriction", 0);
 
 // Enable browser frame
 pref("dom.mozBrowserFramesEnabled", true);
-pref("dom.mozBrowserFramesWhitelist", "http://localhost:7777");
+pref("dom.mozBrowserFramesWhitelist", "http://localhost:7777,http://homescreen.gaiamobile.org,http://browser.gaiamobile.org");
 
 // Temporary permission hack for WebSMS
 pref("dom.sms.enabled", true);
-pref("dom.sms.whitelist", "file://,http://localhost:7777");
+pref("dom.sms.whitelist", "file://,http://localhost:7777,http://sms.gaiamobile.org");
 
 // Temporary permission hack for WebContacts
 pref("dom.mozContacts.enabled", true);
-pref("dom.mozContacts.whitelist", "http://localhost:7777");
+pref("dom.mozContacts.whitelist", "http://localhost:7777,http://dialer.gaiamobile.org,http://sms.gaiamobile.org");
 
 // Ignore X-Frame-Options headers.
 pref("b2g.ignoreXFrameOptions", true);
@@ -440,16 +445,13 @@ pref("b2g.keys.search.enabled", false);
 
 // Screen timeout in minutes
 pref("power.screen.timeout", 60);
+pref("dom.power.whitelist", "file://,http://localhost:7777,http://homescreen.gaiamobile.org,http://settings.gaiamobile.org");
 
 pref("full-screen-api.enabled", true);
 
 pref("media.volume.steps", 10);
 
-// Data connection settings. These will eventually live in the
-// navigator.settings API, or even in a database where we can look
-// it up automatically (bug 729440), but for this will have to do.
-pref("ril.data.enabled", false);
-pref("ril.data.roaming.enabled", false);
-pref("ril.data.apn", "");
-pref("ril.data.user", "");
-pref("ril.data.passwd", "");
+// Screen orientation
+pref("b2g.sensor.orientation.enabled", false);
+
+pref("media.plugins.enabled", true);
